@@ -3,6 +3,7 @@
 #include <ctime>
 #include <conio.h>
 #include <limits>
+#include <vector>
 
 using std::cout;
 using std::cin;
@@ -13,9 +14,9 @@ int random()
 	randomNumber = rand()%101; // for 0 to 100 numbers
 	return randomNumber;
 }
-void showGuesses(int guesses[],int chances)
+void showGuesses(std::vector<int> &guesses)
 {
-	for(int i=0;i<chances;i++)
+	for(int i=0;i<guesses.size();i++)
 	{
 		cout<<" "<<guesses[i]<<"\t";
 	}
@@ -24,7 +25,8 @@ void showGuesses(int guesses[],int chances)
 
 void guessTheNumber()
 {
-	int answer,guess,chances=0,guesses[101]; // 0 to 100 = 101 digits => guesses range is 101
+	std::vector<int> guesses;
+	int answer,guess;
 	bool gameOver = false;
 	answer=random();
 	cout<<"\n Guess the Number \"X\"\0"<<std::endl;
@@ -33,16 +35,16 @@ void guessTheNumber()
 		cout<<" Guess : \0";
 		if(cin>>guess)
 		{
-			guesses[chances++]=guess;
+			guesses.push_back(guess);
 			if(guess>answer)
 				cout<<" "<<guess<<" is greater than \"X\"\0"<<std::endl;
 			else if(guess<answer)
 				cout<<" "<<guess<<" is less than \"X\"\0"<<std::endl;
 			else if(guess==answer)
 			{
-				cout<<" Correct Answer!!. You took "<<chances<<" chances to guess it right\0"<<std::endl;
+				cout<<" Correct Answer!!. You took "<<guesses.size()<<" chances to guess it right\0"<<std::endl;
 				cout<<"\n Your Guesses were : \0"<<std::endl;
-				showGuesses(guesses,chances);
+				showGuesses(guesses);
 				cout<<"\n Press any Key to go Main Menu....\n\0"<<std::endl;
 				_getch();
 				system("cls"); // not recommended as it gived admin privilage to the programs
